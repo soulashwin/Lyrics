@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LiquidID | AI Music Recognition</title>
+    <title>LiquidID | Responsive Music AI</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;600;800&display=swap" rel="stylesheet">
     <style>
-        /* Theme Variables */
         :root {
             --bg: #030712;
             --liquid: #06b6d4;
@@ -19,144 +18,133 @@
         }
 
         [data-theme="light"] {
-            --bg: #f0f4f8;
+            --bg: #f8fafc;
             --liquid: #3b82f6;
-            --liquid-glow: rgba(59, 130, 246, 0.4);
-            --card: rgba(255, 255, 255, 0.7);
-            --text: #1e293b;
-            --sub-text: #64748b;
+            --liquid-glow: rgba(59, 130, 246, 0.3);
+            --card: rgba(255, 255, 255, 0.8);
+            --text: #0f172a;
+            --sub-text: #475569;
             --toggle-bg: rgba(0, 0, 0, 0.05);
         }
 
         body {
             margin: 0; padding: 0;
             background-color: var(--bg);
-            background-image: 
-                radial-gradient(at 0% 0%, var(--liquid-glow) 0, transparent 40%),
-                radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.1) 0, transparent 40%);
+            background-image: radial-gradient(at 0% 0%, var(--liquid-glow) 0, transparent 40%);
             font-family: 'Outfit', sans-serif;
             color: var(--text);
-            display: flex; flex-direction: column; align-items: center;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
             min-height: 100vh; overflow-x: hidden;
-            transition: background-color 0.5s ease;
+            transition: background 0.5s ease;
         }
 
-        /* Theme Toggle Button */
-        .theme-switch {
-            position: absolute; top: 20px; right: 20px;
-            background: var(--toggle-bg);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 10px 15px;
-            border-radius: 30px;
-            cursor: pointer;
-            backdrop-filter: blur(10px);
-            color: var(--text);
-            font-size: 0.8rem;
-            font-weight: 600;
-            transition: 0.3s;
-        }
-
+        /* Responsive Container */
         .container {
-            margin-top: 80px;
+            width: 90%;
+            max-width: 400px; /* Desktop limit */
+            margin: 20px auto;
             background: var(--card);
-            backdrop-filter: blur(25px);
+            backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 50px;
-            padding: 40px;
-            width: 340px;
+            border-radius: 40px;
+            padding: 2rem;
             text-align: center;
-            box-shadow: 0 40px 80px -20px rgba(0,0,0,0.2);
-            transition: all 0.5s ease;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
         }
 
-        /* Liquid Wrapper & Orb */
+        /* Liquid Magic */
         .liquid-wrapper {
             filter: url('#goo');
             position: relative;
-            width: 200px; height: 200px;
-            margin: 0 auto;
+            width: 180px; height: 180px;
+            margin: 1.5rem auto;
             display: flex; align-items: center; justify-content: center;
         }
 
         .orb {
-            width: 90px; height: 90px;
+            width: 80px; height: 80px;
             background: var(--liquid);
             border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.8rem;
             z-index: 5;
             cursor: pointer;
-            box-shadow: 0 0 25px var(--liquid-glow);
-            transition: 0.4s;
+            box-shadow: 0 0 20px var(--liquid-glow);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem;
         }
 
         .drop {
             position: absolute;
-            width: 70px; height: 70px;
+            width: 60px; height: 60px;
             background: var(--liquid);
             border-radius: 50%;
             opacity: 0;
-            z-index: 4;
         }
 
         .is-recording .drop {
             opacity: 1;
-            animation: liquid-flow 3s infinite ease-in-out;
+            animation: liquid-flow 2.5s infinite ease-in-out;
         }
 
         @keyframes liquid-flow {
-            0% { transform: scale(1) translate(0, 0); opacity: 1; }
-            50% { transform: scale(1.4) translate(0, -30px); opacity: 0.8; }
-            100% { transform: scale(0.8) translate(0, 0); opacity: 0; }
+            0%, 100% { transform: scale(1) translate(0, 0); }
+            50% { transform: scale(1.3) translate(0, -25px); }
         }
 
-        .status-msg {
-            margin-top: 20px;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--liquid);
-            font-weight: 800;
-        }
-
+        /* Result Section */
         #resultCard {
             display: none;
-            margin-top: 30px;
-            animation: slideUp 0.6s ease-out;
-        }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+            margin-top: 1.5rem;
+            animation: fadeIn 0.5s ease;
         }
 
         #albumArt {
             width: 100%;
-            border-radius: 30px;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            max-width: 250px;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
         }
 
         .yt-btn {
-            display: inline-block;
-            margin-top: 20px;
+            display: block;
+            margin-top: 1rem;
             background: var(--yt-red);
             color: white;
-            padding: 12px 25px;
-            border-radius: 50px;
+            padding: 12px;
+            border-radius: 30px;
             text-decoration: none;
             font-weight: 600;
-            transition: 0.3s;
         }
 
-        h2 { font-size: 1.4rem; margin: 15px 0 5px; }
-        p.artist { color: var(--sub-text); margin: 0 0 10px; }
+        /* Theme Toggle */
+        .theme-switch {
+            position: fixed; top: 20px; right: 20px;
+            background: var(--toggle-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            color: var(--text);
+            font-size: 0.75rem;
+            backdrop-filter: blur(5px);
+            z-index: 100;
+        }
 
+        /* Tablet & Mobile Adjustments */
+        @media (max-width: 480px) {
+            .container { padding: 1.5rem; border-radius: 30px; }
+            .orb { width: 70px; height: 70px; }
+            .liquid-wrapper { width: 150px; height: 150px; }
+            h2 { font-size: 1.2rem; }
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         svg { width: 0; height: 0; position: absolute; }
     </style>
 </head>
 <body data-theme="dark">
 
-    <button class="theme-switch" id="themeToggle">Toggle</button>
+    <button class="theme-switch" id="themeToggle">🌓 MODE</button>
 
     <svg>
       <defs>
@@ -169,38 +157,33 @@
     </svg>
 
     <div class="container">
-        <h3 style="margin: 0; font-weight: 300; opacity: 0.7;">Lyrics</h3>
-        <div class="status-msg" id="status">Ready</div>
+        <p style="text-transform: uppercase; font-size: 0.7rem; letter-spacing: 2px; opacity: 0.6;">Music Identifier</p>
+        <div id="status" style="font-weight: 800; color: var(--liquid); margin-top: 5px;">Ready</div>
 
         <div class="liquid-wrapper" id="micBtn">
             <div class="drop"></div>
             <div class="drop"></div>
-            <div class="orb"></div>
+            <div class="orb">🎙️</div>
         </div>
 
         <div id="resultCard">
             <img id="albumArt" src="" alt="">
-            <h2 id="songTitle"></h2>
-            <p class="artist" id="artistName"></p>
-            <a href="#" id="ytLink" target="_blank" class="yt-btn">Watch on YouTube ▶</a>
+            <h2 id="songTitle" style="margin: 10px 0 5px;"></h2>
+            <p id="artistName" style="color: var(--sub-text); margin: 0;"></p>
+            <a href="#" id="ytLink" target="_blank" class="yt-btn">Watch on YouTube</a>
         </div>
     </div>
 
 <script>
     const themeToggle = document.getElementById('themeToggle');
-    const body = document.body;
     const micBtn = document.getElementById('micBtn');
     const status = document.getElementById('status');
     const resultCard = document.getElementById('resultCard');
 
-    // 1. Theme Logic
     themeToggle.addEventListener('click', () => {
-        const currentTheme = body.getAttribute('data-theme');
-        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        body.setAttribute('data-theme', newTheme);
+        document.body.dataset.theme = document.body.dataset.theme === 'dark' ? 'light' : 'dark';
     });
 
-    // 2. Recognition Logic
     const API_KEY = '7a35e36056msh7ca9463c22e656fp1514e4jsn535455c2fc51';
     const API_HOST = 'shazam-api6.p.rapidapi.com';
 
@@ -228,44 +211,31 @@
                 document.querySelector('.liquid-wrapper').classList.remove('is-recording');
                 status.innerText = "Analyzing...";
             }, 7000);
-
-        } catch (err) {
-            status.innerText = "Check Mic Settings";
-        }
+        } catch (err) { status.innerText = "Mic Error"; }
     });
 
     async function identifySong(blob) {
         const formData = new FormData();
         formData.append("upload_file", blob, "rec.mp3");
-
         try {
             const response = await fetch(`https://${API_HOST}/shazam/recognize/`, {
                 method: 'POST',
                 headers: { 'x-rapidapi-host': API_HOST, 'x-rapidapi-key': API_KEY },
                 body: formData
             });
-
             const data = await response.json();
-
-            if (data.result && data.result.track) {
+            if (data.result?.track) {
                 const track = data.result.track;
                 document.getElementById('songTitle').innerText = track.title;
                 document.getElementById('artistName').innerText = track.subtitle;
-                document.getElementById('albumArt').src = track.images?.coverart || 'https://via.placeholder.com/300';
-                
-                const query = encodeURIComponent(`${track.title} ${track.subtitle}`);
-                document.getElementById('ytLink').href = `https://www.youtube.com/results?search_query=${query}`;
-
-                status.innerText = "Found it!";
+                document.getElementById('albumArt').src = track.images?.coverart || '';
+                const q = encodeURIComponent(`${track.title} ${track.subtitle}`);
+                document.getElementById('ytLink').href = `https://www.youtube.com/results?search_query=${q}`;
+                status.innerText = "Found!";
                 resultCard.style.display = 'block';
-            } else {
-                status.innerText = "No match found";
-            }
-        } catch (error) {
-            status.innerText = "Network error";
-        } finally {
-            micBtn.style.pointerEvents = 'all';
-        }
+            } else { status.innerText = "No Match"; }
+        } catch (e) { status.innerText = "Error"; }
+        finally { micBtn.style.pointerEvents = 'all'; }
     }
 </script>
 </body>
