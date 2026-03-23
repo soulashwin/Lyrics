@@ -1,1 +1,277 @@
-hi
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoulLyrics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #030712;
+            --liquid: #06b6d4;
+            --liquid-glow: #22d3ee;
+            --card: rgba(15, 23, 42, 0.6);
+            --text: #ffffff;
+            --sub-text: #94a3b8;
+            --yt-red: #ff0000;
+        }
+
+        [data-theme="light"] {
+            --bg: #f8fafc;
+            --liquid: #3b82f6;
+            --liquid-glow: rgba(59, 130, 246, 0.3);
+            --card: rgba(255, 255, 255, 0.8);
+            --text: #0f172a;
+            --sub-text: #475569;
+        }
+
+        body {
+            margin: 0; padding: 0;
+            background-color: var(--bg);
+            background-image: radial-gradient(at 0% 0%, var(--liquid-glow) 0, transparent 40%);
+            font-family: 'Outfit', sans-serif;
+            color: var(--text);
+            display: flex; flex-direction: column; align-items: center;
+            min-height: 100vh;
+            transition: background 0.5s ease;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 900px;
+            margin: 40px 0;
+            background: var(--card);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 40px;
+            padding: clamp(1.5rem, 5vw, 3rem);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Hero Section */
+        .hero { text-align: center; margin-bottom: 3rem; }
+        h1 { font-size: clamp(2rem, 5vw, 3rem); margin: 0; }
+        h1 span { color: var(--liquid); }
+
+        /* Instructions Grid */
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .step-card {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 1.5rem;
+            border-radius: 20px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .step-num {
+            width: 30px; height: 30px;
+            background: var(--liquid);
+            color: #000;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 800; margin: 0 auto 1rem;
+        }
+
+        /* Scanner Area */
+        .scanner-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .liquid-wrapper {
+            filter: url('#goo');
+            position: relative;
+            width: 200px; height: 200px;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        .orb {
+            width: 90px; height: 90px;
+            background: var(--liquid);
+            border-radius: 50%;
+            z-index: 5;
+            cursor: pointer;
+            box-shadow: 0 0 30px var(--liquid-glow);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2rem;
+            animation: initial-pulse 2s infinite;
+        }
+
+        @keyframes initial-pulse {
+            0% { transform: scale(1); box-shadow: 0 0 20px var(--liquid-glow); }
+            50% { transform: scale(1.05); box-shadow: 0 0 40px var(--liquid-glow); }
+            100% { transform: scale(1); box-shadow: 0 0 20px var(--liquid-glow); }
+        }
+
+        /* Result View */
+        #resultCard {
+            display: none;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-top: 3rem;
+            padding-top: 3rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            align-items: center;
+        }
+
+        @media (min-width: 768px) {
+            #resultCard { grid-template-columns: 1fr 1.5fr; text-align: left; }
+        }
+
+        #albumArt {
+            width: 100%; max-width: 300px;
+            border-radius: 30px; margin: 0 auto;
+        }
+
+        .yt-btn {
+            background: var(--yt-red);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            display: inline-block;
+            margin-top: 1.5rem;
+        }
+
+        .theme-switch {
+            position: fixed; top: 20px; right: 20px;
+            background: var(--card);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 10px 20px; border-radius: 30px;
+            cursor: pointer; color: var(--text); z-index: 100;
+        }
+
+        svg { width: 0; height: 0; position: absolute; }
+    </style>
+</head>
+<body data-theme="dark">
+
+    <button class="theme-switch" id="themeToggle">Toggle</button>
+
+    <svg>
+      <defs>
+        <filter id="goo">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+          <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" />
+          <feBlend in="SourceGraphic" in2="goo" />
+        </filter>
+      </defs>
+    </svg>
+
+    <div class="container">
+        <header class="hero">
+            <h1>Soul<span>Lyrics</span></h1>
+            <p style="color: var(--sub-text);">Identify any song in seconds</p>
+        </header>
+
+        <div class="steps-grid">
+            <div class="step-card">
+                <div class="step-num">1</div>
+                <p>Ensure music is playing nearby</p>
+            </div>
+            <div class="step-card">
+                <div class="step-num">2</div>
+                <p>Tap the <strong>Liquid Button</strong>below</p>
+            </div>
+            <div class="step-card">
+                <div class="step-num">3</div>
+                <p>Wait 7s for the AI to analyze</p>
+            </div>
+        </div>
+
+        <div class="scanner-box">
+            <div class="liquid-wrapper" id="micBtn">
+                <div class="orb">🎙️</div>
+            </div>
+            <p id="status" style="font-weight: 800; letter-spacing: 2px; color: var(--liquid);">READY TO SCAN</p>
+        </div>
+
+        <div id="resultCard">
+            <img id="albumArt" src="" alt="">
+            <div class="song-details">
+                <h2 id="songTitle" style="font-size: 2rem; margin:0;"></h2>
+                <p id="artistName" style="color: var(--liquid); font-size: 1.2rem; margin: 5px 0;"></p>
+                <a href="#" id="ytLink" target="_blank" class="yt-btn">WATCH ON YOUTUBE ▶</a>
+            </div>
+        </div>
+    </div>
+
+<script>
+    const themeToggle = document.getElementById('themeToggle');
+    const micBtn = document.getElementById('micBtn');
+    const status = document.getElementById('status');
+    const resultCard = document.getElementById('resultCard');
+
+    themeToggle.addEventListener('click', () => {
+        document.body.dataset.theme = document.body.dataset.theme === 'dark' ? 'light' : 'dark';
+    });
+
+    const API_KEY = '7a35e36056msh7ca9463c22e656fp1514e4jsn535455c2fc51';
+    const API_HOST = 'shazam-api6.p.rapidapi.com';
+
+    micBtn.addEventListener('click', async () => {
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            const mediaRecorder = new MediaRecorder(stream);
+            let chunks = [];
+
+            mediaRecorder.ondataavailable = (e) => chunks.push(e.data);
+            mediaRecorder.onstop = async () => {
+                const blob = new Blob(chunks, { type: 'audio/mpeg' });
+                identifySong(blob);
+            };
+
+            status.innerText = "LISTENING...";
+            status.style.color = "#ff4757";
+            resultCard.style.display = 'none';
+            micBtn.style.animation = "none"; // Stop idle pulse
+            micBtn.style.pointerEvents = "none";
+
+            mediaRecorder.start();
+            setTimeout(() => {
+                mediaRecorder.stop();
+                stream.getTracks().forEach(t => t.stop());
+                status.innerText = "MATCHING...";
+                status.style.color = "var(--liquid)";
+            }, 7500);
+        } catch (err) { status.innerText = "MIC ACCESS DENIED"; }
+    });
+
+    async function identifySong(blob) {
+        const formData = new FormData();
+        formData.append("upload_file", blob, "rec.mp3");
+        try {
+            const response = await fetch(`https://${API_HOST}/shazam/recognize/`, {
+                method: 'POST',
+                headers: { 'x-rapidapi-host': API_HOST, 'x-rapidapi-key': API_KEY },
+                body: formData
+            });
+            const data = await response.json();
+            if (data.result?.track) {
+                const track = data.result.track;
+                document.getElementById('songTitle').innerText = track.title;
+                document.getElementById('artistName').innerText = track.subtitle;
+                document.getElementById('albumArt').src = track.images?.coverart || 'https://via.placeholder.com/300';
+                
+                const q = encodeURIComponent(`${track.title} ${track.subtitle}`);
+                document.getElementById('ytLink').href = `https://www.youtube.com/results?search_query=${q}`;
+                
+                status.innerText = "VIBE FOUND!";
+                resultCard.style.display = 'grid';
+                resultCard.scrollIntoView({ behavior: 'smooth' });
+            } else { status.innerText = "NO MATCH FOUND"; }
+        } catch (e) { status.innerText = "SERVER ERROR"; }
+        finally { micBtn.style.pointerEvents = "all"; micBtn.style.animation = "initial-pulse 2s infinite"; }
+    }
+</script>
+</body>
+</html>
