@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,12 +27,15 @@
         }
 
         body {
-            margin: 0; padding: 0;
+            margin: 0;
+            padding: 0;
             background-color: var(--bg);
             background-image: radial-gradient(at 0% 0%, var(--liquid-glow) 0, transparent 40%);
             font-family: 'Outfit', sans-serif;
             color: var(--text);
-            display: flex; flex-direction: column; align-items: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             min-height: 100vh;
             transition: background 0.5s ease;
         }
@@ -48,12 +52,20 @@
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
 
-        /* Hero Section */
-        .hero { text-align: center; margin-bottom: 3rem; }
-        h1 { font-size: clamp(2rem, 5vw, 3rem); margin: 0; }
-        h1 span { color: var(--liquid); }
+        .hero {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
 
-        /* Instructions Grid */
+        h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin: 0;
+        }
+
+        h1 span {
+            color: var(--liquid);
+        }
+
         .steps-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -70,15 +82,18 @@
         }
 
         .step-num {
-            width: 30px; height: 30px;
+            width: 30px;
+            height: 30px;
             background: var(--liquid);
             color: #000;
             border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-weight: 800; margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            margin: 0 auto 1rem;
         }
 
-        /* Scanner Area */
         .scanner-box {
             display: flex;
             flex-direction: column;
@@ -89,46 +104,68 @@
         .liquid-wrapper {
             filter: url('#goo');
             position: relative;
-            width: 200px; height: 200px;
-            display: flex; align-items: center; justify-content: center;
+            width: 200px;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .orb {
-            width: 90px; height: 90px;
+            width: 90px;
+            height: 90px;
             background: var(--liquid);
             border-radius: 50%;
             z-index: 5;
             cursor: pointer;
             box-shadow: 0 0 30px var(--liquid-glow);
-            display: flex; align-items: center; justify-content: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-size: 2rem;
             animation: initial-pulse 2s infinite;
+            transition: transform 0.1s ease-out, box-shadow 0.1s ease-out;
         }
 
         @keyframes initial-pulse {
-            0% { transform: scale(1); box-shadow: 0 0 20px var(--liquid-glow); }
-            50% { transform: scale(1.05); box-shadow: 0 0 40px var(--liquid-glow); }
-            100% { transform: scale(1); box-shadow: 0 0 20px var(--liquid-glow); }
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 20px var(--liquid-glow);
+            }
+
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 0 40px var(--liquid-glow);
+            }
+
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 20px var(--liquid-glow);
+            }
         }
 
-        /* Result View */
         #resultCard {
             display: none;
             grid-template-columns: 1fr;
             gap: 2rem;
             margin-top: 3rem;
             padding-top: 3rem;
-            border-top: 1px solid rgba(255,255,255,0.1);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
             align-items: center;
         }
 
         @media (min-width: 768px) {
-            #resultCard { grid-template-columns: 1fr 1.5fr; text-align: left; }
+            #resultCard {
+                grid-template-columns: 1fr 1.5fr;
+                text-align: left;
+            }
         }
 
         #albumArt {
-            width: 100%; max-width: 300px;
-            border-radius: 30px; margin: 0 auto;
+            width: 100%;
+            max-width: 300px;
+            border-radius: 30px;
+            margin: 0 auto;
         }
 
         .yt-btn {
@@ -140,31 +177,47 @@
             font-weight: 700;
             display: inline-block;
             margin-top: 1.5rem;
+            transition: opacity 0.2s;
+        }
+
+        .yt-btn:hover {
+            opacity: 0.8;
         }
 
         .theme-switch {
-            position: fixed; top: 20px; right: 20px;
+            position: fixed;
+            top: 20px;
+            right: 20px;
             background: var(--card);
-            border: 1px solid rgba(255,255,255,0.1);
-            padding: 10px 20px; border-radius: 30px;
-            cursor: pointer; color: var(--text); z-index: 100;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            color: var(--text);
+            z-index: 100;
         }
 
-        svg { width: 0; height: 0; position: absolute; }
+        svg {
+            width: 0;
+            height: 0;
+            position: absolute;
+        }
     </style>
 </head>
+
 <body data-theme="dark">
 
-    <button class="theme-switch" id="themeToggle">Toggle</button>
+    <button class="theme-switch" id="themeToggle">Toggle Theme</button>
 
     <svg>
-      <defs>
-        <filter id="goo">
-          <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
-          <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" />
-          <feBlend in="SourceGraphic" in2="goo" />
-        </filter>
-      </defs>
+        <defs>
+            <filter id="goo">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+                <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7"
+                    result="goo" />
+                <feBlend in="SourceGraphic" in2="goo" />
+            </filter>
+        </defs>
     </svg>
 
     <div class="container">
@@ -180,7 +233,7 @@
             </div>
             <div class="step-card">
                 <div class="step-num">2</div>
-                <p>Tap the <strong>Liquid Button</strong>below</p>
+                <p>Tap the <strong>Liquid Button</strong> below</p>
             </div>
             <div class="step-card">
                 <div class="step-num">3</div>
@@ -205,73 +258,151 @@
         </div>
     </div>
 
-<script>
-    const themeToggle = document.getElementById('themeToggle');
-    const micBtn = document.getElementById('micBtn');
-    const status = document.getElementById('status');
-    const resultCard = document.getElementById('resultCard');
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const micBtn = document.getElementById('micBtn');
+        const status = document.getElementById('status');
+        const resultCard = document.getElementById('resultCard');
 
-    themeToggle.addEventListener('click', () => {
-        document.body.dataset.theme = document.body.dataset.theme === 'dark' ? 'light' : 'dark';
-    });
+        themeToggle.addEventListener('click', () => {
+            document.body.dataset.theme = document.body.dataset.theme === 'dark' ? 'light' : 'dark';
+        });
 
-    const API_KEY = '7a35e36056msh7ca9463c22e656fp1514e4jsn535455c2fc51';
-    const API_HOST = 'shazam-api6.p.rapidapi.com';
+        // --- API CONFIGURATION ---
+        const API_KEY = '7a35e36056msh7ca9463c22e656fp1514e4jsn535455c2fc51';
+        const API_HOST = 'shazam-song-recognition-api.p.rapidapi.com';
 
-    micBtn.addEventListener('click', async () => {
-        try {
-            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-            const mediaRecorder = new MediaRecorder(stream);
-            let chunks = [];
+        let audioContext;
+        let animationId;
 
-            mediaRecorder.ondataavailable = (e) => chunks.push(e.data);
-            mediaRecorder.onstop = async () => {
-                const blob = new Blob(chunks, { type: 'audio/mpeg' });
-                identifySong(blob);
-            };
+        micBtn.addEventListener('click', async () => {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({
+                    audio: { sampleRate: 44100, channelCount: 1, echoCancellation: false }
+                });
 
-            status.innerText = "LISTENING...";
-            status.style.color = "#ff4757";
-            resultCard.style.display = 'none';
-            micBtn.style.animation = "none"; // Stop idle pulse
-            micBtn.style.pointerEvents = "none";
+                const mediaRecorder = new MediaRecorder(stream);
+                let chunks = [];
 
-            mediaRecorder.start();
-            setTimeout(() => {
-                mediaRecorder.stop();
-                stream.getTracks().forEach(t => t.stop());
-                status.innerText = "MATCHING...";
-                status.style.color = "var(--liquid)";
-            }, 7500);
-        } catch (err) { status.innerText = "MIC ACCESS DENIED"; }
-    });
+                // Audio Visualizer
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const analyser = audioContext.createAnalyser();
+                const source = audioContext.createMediaStreamSource(stream);
 
-    async function identifySong(blob) {
-        const formData = new FormData();
-        formData.append("upload_file", blob, "rec.mp3");
-        try {
-            const response = await fetch(`https://${API_HOST}/shazam/recognize/`, {
-                method: 'POST',
-                headers: { 'x-rapidapi-host': API_HOST, 'x-rapidapi-key': API_KEY },
-                body: formData
-            });
-            const data = await response.json();
-            if (data.result?.track) {
-                const track = data.result.track;
-                document.getElementById('songTitle').innerText = track.title;
-                document.getElementById('artistName').innerText = track.subtitle;
-                document.getElementById('albumArt').src = track.images?.coverart || 'https://via.placeholder.com/300';
-                
-                const q = encodeURIComponent(`${track.title} ${track.subtitle}`);
-                document.getElementById('ytLink').href = `https://www.youtube.com/results?search_query=${q}`;
-                
-                status.innerText = "VIBE FOUND!";
-                resultCard.style.display = 'grid';
-                resultCard.scrollIntoView({ behavior: 'smooth' });
-            } else { status.innerText = "NO MATCH FOUND"; }
-        } catch (e) { status.innerText = "SERVER ERROR"; }
-        finally { micBtn.style.pointerEvents = "all"; micBtn.style.animation = "initial-pulse 2s infinite"; }
-    }
-</script>
+                source.connect(analyser);
+                analyser.fftSize = 256;
+
+                const bufferLength = analyser.frequencyBinCount;
+                const dataArray = new Uint8Array(bufferLength);
+                const orbElement = document.querySelector('.orb');
+
+                function animateOrb() {
+                    animationId = requestAnimationFrame(animateOrb);
+                    analyser.getByteFrequencyData(dataArray);
+
+                    let sum = 0;
+                    for (let i = 0; i < bufferLength; i++) { sum += dataArray[i]; }
+                    let averageVolume = sum / bufferLength;
+
+                    let scale = 1 + (averageVolume / 255) * 0.6;
+                    let glow = 20 + (averageVolume / 255) * 40;
+
+                    orbElement.style.transform = `scale(${scale})`;
+                    orbElement.style.boxShadow = `0 0 ${glow}px var(--liquid-glow)`;
+                }
+
+                mediaRecorder.ondataavailable = (e) => chunks.push(e.data);
+                mediaRecorder.onstop = async () => {
+                    const blob = new Blob(chunks, { type: 'audio/mpeg' });
+                    identifySong(blob);
+                };
+
+                // UI Updates
+                status.innerText = "LISTENING...";
+                status.style.color = "#ff4757";
+                resultCard.style.display = 'none';
+                micBtn.style.animation = "none";
+                micBtn.style.pointerEvents = "none";
+
+                mediaRecorder.start();
+                animateOrb();
+
+                setTimeout(() => {
+                    mediaRecorder.stop();
+                    stream.getTracks().forEach(t => t.stop());
+
+                    cancelAnimationFrame(animationId);
+                    if (audioContext.state !== 'closed') { audioContext.close(); }
+
+                    orbElement.style.transform = 'scale(1)';
+                    orbElement.style.boxShadow = '0 0 20px var(--liquid-glow)';
+
+                    status.innerText = "MATCHING...";
+                    status.style.color = "var(--liquid)";
+                }, 7500);
+
+            } catch (err) {
+                status.innerText = "MIC ACCESS DENIED";
+                console.error(err);
+            }
+        });
+
+        async function identifySong(blob) {
+            const formData = new FormData();
+            // Updated to just "file" to match standard API docs for this endpoint
+            formData.append("file", blob, "rec.mp3");
+
+            try {
+                // Updated URL endpoint
+                const response = await fetch(`https://${API_HOST}/recognize/file`, {
+                    method: 'POST',
+                    headers: {
+                        'x-rapidapi-host': API_HOST,
+                        'x-rapidapi-key': API_KEY
+                    },
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    if (response.status === 403) {
+                        status.innerText = "API NOT SUBSCRIBED";
+                        alert("Ensure you have clicked 'Subscribe' on the RapidAPI page for this specific API.");
+                    } else {
+                        status.innerText = `ERROR: ${response.status}`;
+                    }
+                    micBtn.style.pointerEvents = "all";
+                    micBtn.style.animation = "initial-pulse 2s infinite";
+                    return;
+                }
+
+                const data = await response.json();
+
+                // Bulletproof check for both data structures we've seen
+                const trackData = data.track || data.result?.track;
+
+                if (trackData) {
+                    document.getElementById('songTitle').innerText = trackData.title;
+                    document.getElementById('artistName').innerText = trackData.subtitle;
+                    document.getElementById('albumArt').src = trackData.images?.coverart || 'https://via.placeholder.com/300';
+
+                    const q = encodeURIComponent(`${trackData.title} ${trackData.subtitle}`);
+                    document.getElementById('ytLink').href = `https://www.youtube.com/results?search_query=${q}`;
+
+                    status.innerText = "VIBE FOUND!";
+                    resultCard.style.display = 'grid';
+                    resultCard.scrollIntoView({ behavior: 'smooth' });
+                } else {
+                    status.innerText = "NO MATCH FOUND";
+                }
+            } catch (e) {
+                status.innerText = "NETWORK ERROR";
+                console.error("Fetch Error:", e);
+            } finally {
+                micBtn.style.pointerEvents = "all";
+                micBtn.style.animation = "initial-pulse 2s infinite";
+            }
+        }
+    </script>
 </body>
+
 </html>
